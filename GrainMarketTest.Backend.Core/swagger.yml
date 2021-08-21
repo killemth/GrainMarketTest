@@ -1,0 +1,100 @@
+swagger: "2.0"
+info:
+  description: This API serves as the core for the Grain Market application.
+  version: "1.0.0"
+  title: Grain Market Backend Core API
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+paths:
+  /commodity:
+    get:
+      operationId: "controllers.commodity.getAll"
+      tags:
+        - "Commodity"
+      summary: "The base commodities that are transacted within the Grain Market application."
+      description: "Return a list of all base commodities."
+      responses:
+        200:
+          description: "It worked!  Expect a list of commodities."
+          schema:
+            type: "array"
+            items:
+              properties:
+                CommodityName:
+                  type: "string"
+                CommodityType:
+                  type: "string"
+                LastUpdated:
+                  type: "string"
+                  description: "The last time this commodity was updated."
+
+  /inventory/{commodityId}:
+    get:
+      operationId: "controllers.inventory.getCommodityInventory"
+      tags:
+        - "Inventory"
+      summary: "Return a summary of the inventory for a specific commodity."
+      description: "Return a summary of the inventory for a specific commodity."
+      parameters:
+        - name: "commodityId"
+          in: "path"
+          description: "ID assocaited with the commodity."
+          type: "integer"
+          required: True
+      responses:
+        404:
+          description: "The commodity was unavailable or not found."
+        200:
+          description: "Contains the summary of inventory available at this request."
+          schema:
+            type: "object"
+            properties:
+              Commodity:
+                  type: "object"
+                  properties:
+                      CommodityName:
+                        type: "string"
+                      CommodityType:
+                        type: "string"
+                      LastUpdated:
+                        type: "string"
+                        description: "The last time this commodity was updated."
+              ValidityTimestamp:
+                  type: "string"
+              TotalQuantity:
+                  type: "integer"
+                  description: "The total volume of this commodity not contracted."
+              PendingQuantity:
+                  type: "integer"
+                  description: "The volume of this commodity bound under pending contract bids."
+
+  /bid/{commodityId}/{quantity}:
+    post:
+      operationId: "controllers.bid.postBid"
+      tags:
+        - "Bid"
+      summary: "Attempts to post a bid for the specified quantity and commodity."
+      description: "Attempts to post a bid for the specified quantity and commodity."
+      parameters:
+        - name: "commodityId"
+          in: "path"
+          description: "ID assocaited with the commodity."
+          type: "integer"
+          required: True
+        - name: "quantity"
+          in: "path"
+          description: "Total volume of the commodity to commit to."
+          type: "integer"
+          required: True
+      responses:
+        200:
+          description: "Yay!  You've expressed interest in obtaining some stuff."
+        423:
+          description: "The commodity is temporarily unavailable, try again in a few seconds."
+        409:
+          description: "The commodity is temporarily unavailable, try again in a few seconds."
