@@ -11,15 +11,12 @@ connexApplication.add_api("swagger.yml")
 
 @connexApplication.route("/")
 def default():
-    """
-    This function just responds to the browser URL
-    localhost:5000/
-    """
+    #return redirect(url_for("/api./api_swagger_ui_index"))
     return render_template("default.html")
 
 
 if __name__ == "__main__":
-    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    HOST = os.environ.get('SERVER_HOST', '0.0.0.0')
     try:
         PORT = int(os.environ.get('SERVER_PORT', '5555'))
     except ValueError:
