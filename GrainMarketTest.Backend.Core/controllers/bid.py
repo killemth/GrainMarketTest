@@ -15,13 +15,13 @@ _db = databaseContext
 
 ######################################################################
 
-def postBid(commodityId, quantity):
+def postBid(user, commodityId, quantity):
     """
     Handles requests to /api/bid/{commodityId}/{quantity}.
 
     :return:        success or failure of the bid.
     """
-    entityId = 1
+    entityId = user
 
     lockContext = f"commoditybid:{commodityId}"
 

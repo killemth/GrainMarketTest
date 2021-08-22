@@ -21,6 +21,8 @@ class Entity(_db.Model):
     EntityId = _db.Column(_db.Integer, primary_key = True)
     EntityName = _db.Column(_db.String(32))
     EntityType = _db.Column(_db.Integer)
+    LoginUsername = _db.Column(_db.String(32), unique = True, index = True)
+    LoginPasswordHash = _db.Column(_db.String(128))
     LastUpdated = _db.Column(
         _db.DateTime, default = datetime.utcnow, onupdate = datetime.utcnow
     )

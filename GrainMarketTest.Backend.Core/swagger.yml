@@ -106,4 +106,11 @@ paths:
           description: The commodity is temporarily unavailable, try again in a few
             seconds.
           content: {}
-components: {}
+      security:
+        - basic: []
+components:
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+      x-basicInfoFunc: helpers.authentication.validateToken

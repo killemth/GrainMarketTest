@@ -5,6 +5,7 @@ WARNING: Will Remove Existing Database.
 """
 
 import os
+from werkzeug.security import generate_password_hash
 from configuration import databaseContext, databaseName, baseDirectory
 from models.entity import Entity, EntityType
 from models.commodity import Commodity
@@ -40,9 +41,9 @@ for commodity in COMMODITY:
 #-------------------------------
 
 ENTITY = [
-    {"EntityName": "John CornDoe", "EntityType": EntityType.PERSON.value},
-    {"EntityName": "Wheaty McWheat", "EntityType": EntityType.PERSON.value},
-    {"EntityName": "Combine McHarvesterFace", "EntityType": EntityType.PERSON.value},
+    {"EntityName": "John CornDoe", "EntityType": EntityType.PERSON.value, "LoginUsername": "user1"},
+    {"EntityName": "Wheaty McWheat", "EntityType": EntityType.PERSON.value, "LoginUsername": "user2"},
+    {"EntityName": "Combine McHarvesterFace", "EntityType": EntityType.PERSON.value, "LoginUsername": "user3"},
     {"EntityName": "Super Evils", "EntityType": EntityType.BUSINESS.value},
     {"EntityName": "The Good Guyz", "EntityType": EntityType.BUSINESS.value}
 ]
@@ -50,7 +51,9 @@ ENTITY = [
 for entity in ENTITY:
     data = Entity(
         EntityName = entity.get("EntityName"),
-        EntityType = entity.get("EntityType")
+        EntityType = entity.get("EntityType"),
+        LoginUsername = entity.get("LoginUsername"),
+        LoginPasswordHash = generate_password_hash("TempPassword") if entity.get("LoginUsername") is not None else None
         )
 
     databaseContext.session.add(data)

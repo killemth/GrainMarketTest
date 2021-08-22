@@ -40,6 +40,7 @@
     <Compile Include="databaseSeed.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="helpers\authentication.py" />
     <Compile Include="helpers\inventory.py">
       <SubType>Code</SubType>
     </Compile>
