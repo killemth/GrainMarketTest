@@ -1,0 +1,12 @@
+[MASTER]
+
+load-plugins=pylint_flask,pylint_flask_sqlalchemy
+ignored-classes=scoped_session
+
+disable=too-few-public-methods,too-many-ancestors
+
+module-naming-style=camelCase
+function-naming-style=camelCase
+variable-naming-style=camelCase
+attr-naming-style=PascalCase
+argument-naming-style=camelCase

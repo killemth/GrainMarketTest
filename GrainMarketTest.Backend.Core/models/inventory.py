@@ -1,7 +1,11 @@
+"""
+Inventory Data Models and Schemas for API Output and Database.
+"""
+
 from datetime import datetime
+from marshmallow import fields
 from configuration import databaseContext, serializerContext
 from models.commodity import Commodity, CommoditySchema
-from marshmallow import fields
 
 ######################################################################
 
@@ -10,6 +14,9 @@ _db = databaseContext
 ######################################################################
 
 class Inventory(_db.Model):
+    """
+    Represents an Entity-Bound Inventory for a Commodity.
+    """
     __tablename__ = "inventory"
 
     InventoryId = _db.Column(_db.Integer, primary_key = True)
@@ -21,19 +28,37 @@ class Inventory(_db.Model):
     )
 
 class InventorySchema(serializerContext.SQLAlchemyAutoSchema):
+    """
+    Represents the Serializable Schema for the Model.
+    """
     class Meta:
+        """
+        Meta Data for Marshmallow Schema Mapping.
+        """
         model = Inventory
         sqla_session = _db.session
         load_instance = True
 
 class InventorySummary():
-    def __init__(self, commodity:Commodity, totalQuantity:int, pendingQuantity:int, timestamp:datetime):
+    """
+    Represents an Inventory Summary of a Commodity.
+    """
+    def __init__(
+            self,
+            commodity:Commodity,
+            totalQuantity:int,
+            pendingQuantity:int,
+            timestamp:datetime
+        ):
         self.Commodity = commodity
         self.ValidityTimestamp = timestamp
         self.TotalQuantity = totalQuantity
         self.PendingQuantity = pendingQuantity
 
 class InventorySummarySchema(serializerContext.Schema):
+    """
+    Represents the Serializable Schema for the Model.
+    """
     ValidityTimestamp = fields.DateTime()
     TotalQuantity = fields.Integer()
     PendingQuantity = fields.Integer()

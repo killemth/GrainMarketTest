@@ -1,3 +1,9 @@
+"""
+System and Application Configuration.
+
+Defines Databasee, Flask, Connexion, and Marshmallow Context.
+"""
+
 import os
 import connexion
 from flask_sqlalchemy import SQLAlchemy

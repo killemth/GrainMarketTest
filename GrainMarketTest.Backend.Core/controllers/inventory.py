@@ -1,10 +1,12 @@
+"""
+Inventory Bid API Controller to Serve Web Requests.
+"""
+
 from datetime import datetime
-from flask import make_response, abort
-from configuration import databaseContext
-from models.commodity import Commodity, CommoditySchema
-from models.inventory import Inventory, InventorySummary, InventorySummarySchema
-from models.bid import Bid
-from helpers.inventory import *
+from flask import abort
+from models.commodity import Commodity
+from models.inventory import InventorySummary, InventorySummarySchema
+from helpers.inventory import lookupCurrentQuantity, lookupPendingQuantity
 
 ######################################################################
 

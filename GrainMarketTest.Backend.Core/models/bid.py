@@ -1,3 +1,7 @@
+"""
+Commodity Bid Data Models and Schemas for API Output and Database.
+"""
+
 from enum import Enum
 from datetime import datetime
 from configuration import databaseContext, serializerContext
@@ -11,6 +15,9 @@ _db = databaseContext
 ######################################################################
 
 class Bid(_db.Model):
+    """
+    Represents a Bid, bound to a Commodity and an Entity.
+    """
     __tablename__ = "bid"
 
     BidId = _db.Column(_db.String(16), primary_key = True, default = randomKey)
@@ -25,7 +32,13 @@ class Bid(_db.Model):
     )
 
 class BidSchema(serializerContext.SQLAlchemyAutoSchema):
+    """
+    Represents the Serializable Schema for the Model.
+    """
     class Meta:
+        """
+        Meta Data for Marshmallow Schema Mapping.
+        """
         model = Bid
         sqla_session = _db.session
         load_instance = True
@@ -33,6 +46,9 @@ class BidSchema(serializerContext.SQLAlchemyAutoSchema):
 #-------------------------------
 
 class BidState(Enum):
+    """
+    Identifies the State Binding for a Bid.
+    """
     EXPIRED = 0
     PENDING = 1
     DECLINED = 2

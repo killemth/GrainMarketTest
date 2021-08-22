@@ -1,5 +1,7 @@
-from flask import make_response, abort
-from configuration import databaseContext
+"""
+Commodity API Controller to Serve Web Requests.
+"""
+
 from models.commodity import Commodity, CommoditySchema
 
 ######################################################################
@@ -12,5 +14,5 @@ def getAll():
     """
     data = Commodity.query.order_by(Commodity.CommodityName).all()
     schema = CommoditySchema(many = True)
-    
+
     return schema.dump(data)

@@ -37,7 +37,7 @@
     <Compile Include="configuration.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database_seed.py">
+    <Compile Include="databaseSeed.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="helpers\inventory.py">
@@ -60,6 +60,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".pylintrc" />
     <Content Include="requirements.txt" />
     <Content Include="swagger.yml" />
     <Content Include="templates\default.html" />

@@ -1,6 +1,9 @@
+"""
+Distributed-Lock Data Model.
+"""
+
 from datetime import datetime
-from sqlalchemy import UniqueConstraint
-from configuration import databaseContext, serializerContext
+from configuration import databaseContext
 from helpers.keyRandomizer import randomKey
 
 ######################################################################
@@ -10,6 +13,9 @@ _db = databaseContext
 ######################################################################
 
 class DistributedLock(_db.Model):
+    """
+    Represents a Distributed Lock Object and Handle.
+    """
     __tablename__ = "distributed-lock"
 
     LockId = _db.Column(_db.String(16), primary_key = True, default = randomKey)

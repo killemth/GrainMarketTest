@@ -1,10 +1,13 @@
+"""
+Commodity Bid API Controller to Serve Web Requests.
+"""
+
 import logging
 from flask import make_response, abort
 from configuration import databaseContext
-from models.commodity import Commodity
 from models.bid import Bid, BidState
 from models.distributedLock import DistributedLock
-from helpers.inventory import *
+from helpers.inventory import calculateAvailableQuantity
 
 ######################################################################
 
@@ -14,9 +17,9 @@ _db = databaseContext
 
 def postBid(commodityId, quantity):
     """
-    Handles requests to /api/commodity by returning a list of all commodities.
+    Handles requests to /api/bid/{commodityId}/{quantity}.
 
-    :return:        all commodities supported.
+    :return:        success or failure of the bid.
     """
     entityId = 1
 
@@ -47,7 +50,7 @@ def postBid(commodityId, quantity):
             ))
         _db.session.commit()
 
-    except:
+    except: # pylint: disable=bare-except
         _db.session.rollback()
         logging.exception("message")
         abort(409, "BEC003|Unable to interact with the commodity at this time, try again.")
@@ -56,5 +59,5 @@ def postBid(commodityId, quantity):
         if lockHandle != None and lockHandle.LockId != None:
             _db.session.delete(lockHandle)
             _db.session.commit()
-    
+
     return make_response("BEC004|The commodity bid has been filled successfully.", 200)

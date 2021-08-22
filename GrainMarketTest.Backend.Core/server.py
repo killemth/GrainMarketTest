@@ -1,3 +1,9 @@
+"""
+Main Entry for Server Application.
+
+Initiates and Serves API Resources.
+"""
+
 import os
 from flask import render_template
 import configuration
